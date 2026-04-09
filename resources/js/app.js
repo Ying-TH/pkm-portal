@@ -6,7 +6,33 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createApp, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+import PrimeVue from 'primevue/config';
+import { definePreset } from '@primeuix/themes';
+import Aura from '@primeuix/themes/aura';
+import 'primeicons/primeicons.css';
+
+import ToastService from 'primevue/toastservice';
+import ConfirmationService from 'primevue/confirmationservice';
+
+const PKMPreset = definePreset(Aura, {
+    semantic: {
+        primary: {
+            50:  '{violet.50}',
+            100: '{violet.100}',
+            200: '{violet.200}',
+            300: '{violet.300}',
+            400: '{violet.400}',
+            500: '{violet.500}',
+            600: '{violet.600}',
+            700: '{violet.700}',
+            800: '{violet.800}',
+            900: '{violet.900}',
+            950: '{violet.950}',
+        },
+    },
+});
+
+const appName = import.meta.env.VITE_APP_NAME || 'PKM Portal';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -19,9 +45,21 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            .use(PrimeVue, {
+                theme: {
+                    preset: PKMPreset,
+                    options: {
+                        prefix: 'p',
+                        darkModeSelector: '.dark',
+                        cssLayer: false,
+                    },
+                },
+            })
+            .use(ToastService)
+            .use(ConfirmationService)
             .mount(el);
     },
     progress: {
-        color: '#4B5563',
+        color: '#7c3aed',
     },
 });

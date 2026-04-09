@@ -5,8 +5,12 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function() {
-    return redirect()->route('portal.overview');
-});
+    return Inertia::render('Portal/Overview');
+})->name('home');
+
+Route::get('/overview', function() {
+    return Inertia::render('Portal/Overview');
+})->name('overview');
 
 Route::prefix('portal')->name('portal.')->group(function () {
     Route::get('/', function() {
